@@ -1,0 +1,28 @@
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib import animation
+
+fig = plt.figure()
+ax = plt.axes(xlim=(0, 100),ylim=(-5, 5))
+line, = ax.plot([],[],lw=2)
+plt.xlabel('time')
+plt.ylabel('$e^{-0.01}* \sin(t) $')
+plt.close()
+
+def init():
+    line.set_data([],[])
+    return line,
+
+# The function to animate.
+def animate(a):
+    t = np.linspace(0, 100, 100)
+    y = np.exp(-0.01 * t * a)* np.sin(t)
+    line.set_data(t, y)
+    return line,
+
+# Note: blit=True means only re-draw the parts that have changed.
+anim = animation.FuncAnimation(fig, animate, init_func=init, \
+                               frames=50, interval=100, blit=False)
+
+from IPython.display import HTML
+HTML(anim.to_jshtml())
