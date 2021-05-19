@@ -1,0 +1,28 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+
+r1, r2 = 0.01 , 0.02
+x0, y0, z0 = 1000, 0, 0
+tmax, n = 500, 10000
+
+def chemical_kin(X, t, r1, r2):
+  x, y, z = X
+  dx = -r1 * x
+  dy = r1 * x - r2 * y
+  dz = r2 * y
+  return (dx, dy, dz)
+
+t = np.linspace(0, tmax, n)
+f = odeint(chemical_kin, (x0, y0, z0), t, args=(r1, r2))
+x, y, z = f.T
+
+plt.figure(1)
+plt.xlabel('Time')
+plt.ylabel('Concentration')
+plt.title('Chemical Kinetics')
+plt.plot(t, x, label='|A|')
+plt.plot(t, y, label='|B|')
+plt.plot(t, z, label='|C|')
+legend = plt.legend(loc='best')
+plt.show()
