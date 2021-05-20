@@ -1,0 +1,24 @@
+import numpy as np
+
+# Neural Network for AND gate:
+
+w1, w2, w3, w4, w5, w6 = 60, 80, 60, 80, -60, 60
+b1, b2, b3 = -90, -40, -30
+
+def sigmoid_activation(x):
+    return 1 / (1 + np.exp(-x ))
+
+def h1_output(x1, x2):
+    return sigmoid_activation(x1 * w1 + x2 * w3 + b1)
+    
+def h2_output(x1, x2):
+    return sigmoid_activation(x1 * w2 + x2 * w4 + b2)
+    
+def output(x1, x2):
+    return sigmoid_activation (h1_output(x1, x2) * w5 + h2_output(x1, x2) * w6 + b3)
+
+
+print("Output(0,0) = ", output(0,0))
+print("Output(1,0) = ", output(1,0))
+print("Output(0,1) = ", output(0,1))
+print("Output(1,1) = ", output(1,1))
